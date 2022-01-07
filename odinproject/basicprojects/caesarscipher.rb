@@ -20,16 +20,25 @@ def caesarcipher string, shift_factor
   #return joined string
   shift_factor = shift_factor % 26
   string_to_transform = string.split("")
-  string_to_transform.map! do |letter|
-    new_letter = letter.ord + shift_factor
-    if letter.ord <= 90 && new_letter > 90
-      new_letter -= 26
-    elsif letter.ord <= 122 && new_letter > 122
-      new_letter -= 26
+
+  string_to_transform = string_to_transform.map do |letter|
+    bit = letter.ord
+    new_letter = bit + shift_factor
+
+    if (bit < 65 || bit > 90) && (bit < 97 || bit > 122)
+      letter
+    else
+      if bit <= 90 && new_letter > 90
+        new_letter -= 26
+      elsif bit <= 122 && new_letter > 122
+        new_letter -= 26
+      end
+
+      new_letter.chr
     end
-    new_letter.chr
   end
+
   string_to_transform.join("")
 end
 
-puts caesarcipher('w', 27)
+puts caesarcipher('wyd?', 3)
